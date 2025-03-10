@@ -26,6 +26,12 @@ The project uses the following data sources:
   - Crimes against society
 - **Incarceration Data**: Bureau of Justice Statistics imprisonment rates
 
+## Sources
+
+- Carson, E. Ann, and Rich Kluckow. "Table 7. Imprisonment rates of U.S. residents, based on sentenced prisoners under the jurisdiction of state or federal correctional authorities, by sex, age, and jurisdiction, 2021 and 2022." Prisoners in 2022 – Statistical Tables, Bureau of Justice Statistics, 30 Nov. 2023, NCJ 307149.
+- "State Offense Tables (Totals): Crimes Against Persons; Society; Property Offenses, Offense Category by State, 2023." Crime Data Explorer, Federal Bureau of Investigation, 23 Sept. 2024, cde.ucr.cjis.gov/.
+- Tony McGovern, et al. United States General Election Presidential Results by District, Ward, or County from 2008 to 2024. Zenodo, 16 Jan. 2025, doi:10.5281/zenodo.14223604.
+
 ## Project Structure
 
 ```
@@ -88,8 +94,4 @@ To reproduce the analysis:
 
 ## License
 
-[Specify license information here]
-
-## Contributors
-
-[Add contributor information here]
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
