@@ -1,0 +1,154 @@
+state,crime_rate,crime_type
+Alabama,1671.938420374179,person
+Alaska,1615.4035349785975,person
+Arizona,1351.0729000780339,person
+Arkansas,2123.2711524599254,person
+California,1131.442674777345,person
+Colorado,1233.8102974159851,person
+Connecticut,836.0942348395545,person
+Delaware,1646.7840564401245,person
+District of Columbia,3522.0892761409896,person
+Florida,1159.4566441285747,person
+Georgia,1316.1217236827642,person
+Hawaii,869.3941623356951,person
+Idaho,954.1911620853061,person
+Illinois,1703.0991014198987,person
+Indiana,1441.4554145708858,person
+Iowa,1144.6676495412826,person
+Kansas,1810.0654630609745,person
+Kentucky,1120.5444494713997,person
+Louisiana,1753.8888731476497,person
+Maine,956.7807915903023,person
+Maryland,1294.9109110848108,person
+Massachusetts,1083.8405266126565,person
+Michigan,1732.8110745588806,person
+Minnesota,861.0183292141834,person
+Mississippi,1173.6352721568353,person
+Missouri,1455.6340225088445,person
+Montana,1411.364772773452,person
+Nebraska,1060.767475753924,person
+Nevada,2034.6097724890908,person
+New Hampshire,1017.1737112372358,person
+New Jersey,861.8561649769006,person
+New Mexico,2212.444749857898,person
+New York,2095.398556197907,person
+North Carolina,1419.331425474521,person
+North Dakota,1643.5224753356822,person
+Ohio,1423.1642129183915,person
+Oklahoma,1688.8498365987273,person
+Oregon,1027.881790480898,person
+Pennsylvania,1323.7709781526814,person
+Rhode Island,897.7221647657298,person
+South Carolina,1829.4297147305922,person
+South Dakota,1654.6057814067701,person
+Tennessee,2078.461949109717,person
+Texas,1546.1526824364846,person
+Utah,1206.6932428413897,person
+Vermont,633.7031865864357,person
+Virginia,1323.7917517343715,person
+Washington,1156.4954667202876,person
+West Virginia,1040.0672803166494,person
+Wisconsin,884.4950365444676,person
+Wyoming,1333.8587752027674,person
+Alabama,2784.7754411072933,property
+Alaska,2242.475252216413,property
+Arizona,2707.4369556669994,property
+Arkansas,3685.267483527877,property
+California,3149.474665052464,property
+Colorado,4519.024720001938,property
+Connecticut,2702.1079427708246,property
+Delaware,3651.939644729574,property
+District of Columbia,8365.29341416141,property
+Florida,2171.5265003531545,property
+Georgia,2732.2473092831588,property
+Hawaii,2071.2338252477607,property
+Idaho,1474.2457777807292,property
+Illinois,3256.31591970527,property
+Indiana,2322.56310061354,property
+Iowa,2442.569031045921,property
+Kansas,3716.3001247760244,property
+Kentucky,2445.8188390886326,property
+Louisiana,3417.633998272488,property
+Maine,1787.103735557654,property
+Maryland,3448.9809043278683,property
+Massachusetts,2082.743990713586,property
+Michigan,2737.0150538664725,property
+Minnesota,2749.931580073815,property
+Mississippi,2255.602197937024,property
+Missouri,3301.8359890040983,property
+Montana,2823.2596024220065,property
+Nebraska,2508.2002797108707,property
+Nevada,3994.1244108536835,property
+New Hampshire,1831.3533330983184,property
+New Jersey,2399.375010431063,property
+New Mexico,5258.9969713165865,property
+New York,3345.811588274189,property
+North Carolina,3299.826818824548,property
+North Dakota,3102.588764755857,property
+Ohio,2620.0421130625496,property
+Oklahoma,3347.5306278713633,property
+Oregon,4067.6550348055403,property
+Pennsylvania,3436.9014858008513,property
+Rhode Island,2144.2641163292974,property
+South Carolina,3501.511583336938,property
+South Dakota,2684.233033124099,property
+Tennessee,3672.0285416253328,property
+Texas,3313.2624690243138,property
+Utah,2853.384638508236,property
+Vermont,2586.089728540892,property
+Virginia,2899.0890196884334,property
+Washington,4587.95748487403,property
+West Virginia,1891.9374210755075,property
+Wisconsin,2044.7733933083848,property
+Wyoming,2542.1162365420228,property
+Alabama,936.5510472175787,society
+Alaska,525.9820701264298,society
+Arizona,1030.2266937505,society
+Arkansas,1144.6544720015,society
+California,810.7146425763514,society
+Colorado,695.0337581200769,society
+Connecticut,284.2825452784161,society
+Delaware,1091.97685799843,society
+District of Columbia,911.3777887747948,society
+Florida,537.2391892964949,society
+Georgia,536.1827023719106,society
+Hawaii,203.71630792715314,society
+Idaho,1473.224159834171,society
+Illinois,367.2173916611467,society
+Indiana,881.1589311098896,society
+Iowa,925.6718023588325,society
+Kansas,1231.2762044434457,society
+Kentucky,979.4458919963922,society
+Louisiana,1197.5155845570848,society
+Maine,349.2815904599913,society
+Maryland,435.1671737853998,society
+Massachusetts,226.4797066264393,society
+Michigan,454.8908807175374,society
+Minnesota,482.7682082910124,society
+Mississippi,1040.0179948060447,society
+Missouri,713.9565622873495,society
+Montana,495.1614641584375,society
+Nebraska,846.1753138600889,society
+Nevada,929.9348882122957,society
+New Hampshire,467.6795807334814,society
+New Jersey,245.25913145205962,society
+New Mexico,877.215308000984,society
+New York,366.8790726616687,society
+North Carolina,1082.1904348106445,society
+North Dakota,1708.5796363432264,society
+Ohio,647.0165732437121,society
+Oklahoma,898.3123095625267,society
+Oregon,355.38338779032955,society
+Pennsylvania,701.0390738055521,society
+Rhode Island,276.73523682835287,society
+South Carolina,1143.7734250673764,society
+South Dakota,1504.876277705585,society
+Tennessee,1331.3630861439754,society
+Texas,749.5566518664584,society
+Utah,1388.1457867801716,society
+Vermont,227.03965008093115,society
+Virginia,632.7625894179046,society
+Washington,271.6358733620514,society
+West Virginia,780.3076479922638,society
+Wisconsin,1085.5997368749584,society
+Wyoming,1142.447808480321,society

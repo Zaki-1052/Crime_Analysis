@@ -1,0 +1,27 @@
+{
+    "id": "2EE5EF05",
+    "path": "~/Documents/VS_Code/crime_analysis/scripts/02_process_incarceration_data.R",
+    "project_path": "scripts/02_process_incarceration_data.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1741579322909.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "10,59",
+        "scrollLine": "1"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1741579835,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1741579835867,
+    "read_only": false,
+    "read_only_alternatives": []
+}

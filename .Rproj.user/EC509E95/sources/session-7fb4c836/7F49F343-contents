@@ -1,0 +1,219 @@
+# 04_merge_datasets.R - Improved version
+# Purpose: Create a complete master dataset by merging political, incarceration, and crime data
+
+# Load required libraries
+library(tidyverse)
+library(stringr)
+
+# Create standard state name function for consistency across datasets
+standardize_state_name <- function(state_name) {
+  # Convert to title case
+  name <- str_to_title(state_name)
+  
+  # Handle common variations
+  name <- case_when(
+    name == "District Of Columbia" ~ "District of Columbia",
+    name == "D.c." ~ "District of Columbia",
+    name == "D.C." ~ "District of Columbia",
+    name == "Washington Dc" ~ "District of Columbia",
+    TRUE ~ name
+  )
+  
+  return(name)
+}
+
+# Create directories if they don't exist
+dir.create("data/processed", recursive = TRUE, showWarnings = FALSE)
+
+# Load and standardize datasets
+read_and_standardize <- function(file_path) {
+  if (!file.exists(file_path)) {
+    stop(paste("File not found:", file_path))
+  }
+  
+  # Read the file with more robust error handling
+  tryCatch({
+    df <- read_csv(file_path, col_types = cols(.default = "c"))
+    # Convert all column types appropriately after reading as character
+    df <- type_convert(df)
+    # Standardize state names
+    if ("state" %in% names(df)) {
+      df <- df %>% mutate(state = standardize_state_name(state))
+    }
+    return(df)
+  }, error = function(e) {
+    message(paste("Error reading", file_path, ":", e$message))
+    return(NULL)
+  })
+}
+
+# Load all processed datasets
+political_data <- read_and_standardize("data/processed/state_political_leaning.csv")
+incarceration_data <- read_and_standardize("data/processed/state_incarceration_rates.csv")
+crime_data <- read_and_standardize("data/processed/state_crime_rates.csv")
+
+# Print detailed information about each dataset
+print_dataset_info <- function(name, data) {
+  cat("\n", name, "Dataset:\n")
+  cat("  Columns:", paste(colnames(data), collapse=", "), "\n")
+  cat("  Rows:", nrow(data), "\n")
+  cat("  States:", paste(sort(data$state), collapse=", "), "\n")
+  cat("\n")
+}
+
+print_dataset_info("Political", political_data)
+print_dataset_info("Incarceration", incarceration_data)
+print_dataset_info("Crime", crime_data)
+
+# Create a reference list of all 50 states plus DC
+reference_states <- c(
+  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
+  "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia",
+  "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+  "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
+  "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+  "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota",
+  "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
+  "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia",
+  "Washington", "West Virginia", "Wisconsin", "Wyoming"
+)
+
+# Check for missing states in each dataset
+check_missing_states <- function(data, name) {
+  missing_states <- reference_states[!reference_states %in% data$state]
+  present_states <- data$state[!data$state %in% reference_states]
+  
+  cat("\nChecking", name, "dataset:\n")
+  if (length(missing_states) > 0) {
+    cat("  Missing states:", paste(missing_states, collapse=", "), "\n")
+  } else {
+    cat("  All states present.\n")
+  }
+  
+  if (length(present_states) > 0) {
+    cat("  Extra entries (not in reference list):", paste(present_states, collapse=", "), "\n")
+  }
+}
+
+check_missing_states(political_data, "political")
+check_missing_states(incarceration_data, "incarceration")
+check_missing_states(crime_data, "crime")
+
+# Merge datasets with better error handling
+# Start with a data frame containing all reference states
+merged_data <- tibble(state = reference_states)
+
+# Function to safely join datasets
+safe_join <- function(base_df, join_df, join_by = "state", join_type = "left") {
+  # Check if data frame is valid
+  if (is.null(join_df)) {
+    warning(paste("Skipping join with NULL dataframe"))
+    return(base_df)
+  }
+  
+  # Perform the join
+  result <- switch(join_type,
+                   "left" = left_join(base_df, join_df, by = join_by),
+                   "full" = full_join(base_df, join_df, by = join_by),
+                   "inner" = inner_join(base_df, join_df, by = join_by),
+                   left_join(base_df, join_df, by = join_by)  # Default to left join
+  )
+  
+  # Check for NA values created by the join
+  na_cols <- colnames(join_df)[colnames(join_df) != join_by]
+  na_counts <- colSums(is.na(result[, na_cols, drop = FALSE]))
+  
+  cat("\nJoin results with", deparse(substitute(join_df)), ":\n")
+  for (col in na_cols) {
+    if (na_counts[col] > 0) {
+      cat("  Column", col, "has", na_counts[col], "NA values\n")
+      cat("  States with NA in this column:", 
+          paste(result$state[is.na(result[[col]])], collapse=", "), "\n")
+    }
+  }
+  
+  return(result)
+}
+
+# Perform joins sequentially
+merged_data <- safe_join(merged_data, political_data)
+merged_data <- safe_join(merged_data, incarceration_data)
+merged_data <- safe_join(merged_data, crime_data)
+
+# Handle missing values - more detailed approach
+# Check for any missing values in each column
+missing_value_summary <- merged_data %>%
+  summarise(across(everything(), ~sum(is.na(.))))
+
+print(missing_value_summary)
+
+# More intelligently handle missing values
+merged_data <- merged_data %>%
+  mutate(
+    # For political columns
+    across(starts_with("total_") | starts_with("pct_"), 
+           ~ifelse(is.na(.), median(., na.rm = TRUE), .)),
+    
+    # Handle political_leaning specially - for missing values, calculate from pct_rep and pct_dem
+    political_leaning = case_when(
+      is.na(political_leaning) & !is.na(pct_rep) & !is.na(pct_dem) ~ pct_rep - pct_dem,
+      is.na(political_leaning) ~ 0, # Default to neutral if we can't calculate
+      TRUE ~ political_leaning
+    ),
+    
+    # For imprisonment rate, use median if missing
+    imprisonment_rate_2022 = ifelse(is.na(imprisonment_rate_2022), 
+                                    median(imprisonment_rate_2022, na.rm = TRUE),
+                                    imprisonment_rate_2022),
+    
+    # For crime rates, use median if missing
+    across(starts_with("crime_rate_"), 
+           ~ifelse(is.na(.), median(., na.rm = TRUE), .))
+  )
+
+# Create derived metrics for visualization
+merged_data <- merged_data %>%
+  mutate(
+    # Normalize incarceration rate to 0-1 range
+    incarceration_intensity = (imprisonment_rate_2022 - min(imprisonment_rate_2022)) / 
+      (max(imprisonment_rate_2022) - min(imprisonment_rate_2022)),
+    
+    # Scale crime rates to 0-100 for visualization
+    crime_rate_person_scaled = (crime_rate_person - min(crime_rate_person)) / 
+      (max(crime_rate_person) - min(crime_rate_person)) * 100,
+    crime_rate_property_scaled = (crime_rate_property - min(crime_rate_property)) / 
+      (max(crime_rate_property) - min(crime_rate_property)) * 100,
+    crime_rate_society_scaled = (crime_rate_society - min(crime_rate_society)) / 
+      (max(crime_rate_society) - min(crime_rate_society)) * 100,
+    
+    # Create categorical political leaning
+    political_category = case_when(
+      political_leaning < -0.2 ~ "Strong Democrat",
+      political_leaning < -0.1 ~ "Lean Democrat",
+      political_leaning < 0.1 ~ "Swing",
+      political_leaning < 0.2 ~ "Lean Republican",
+      TRUE ~ "Strong Republican"
+    )
+  )
+
+# Verify no missing values remain
+final_missing <- colSums(is.na(merged_data))
+cat("\nRemaining missing values after processing:\n")
+print(final_missing)
+
+# Sort by state name for consistency
+merged_data <- merged_data %>% arrange(state)
+
+# Save the final merged dataset
+write_csv(merged_data, "data/processed/master_dataset.csv")
+
+# Also save a version with state as row names for easier use in visualization
+merged_data_matrix <- as.data.frame(merged_data)
+rownames(merged_data_matrix) <- merged_data_matrix$state
+write_csv(merged_data, "data/processed/master_dataset_indexed.csv")
+
+cat("\nData merging complete! Final dataset has", nrow(merged_data), 
+    "rows and", ncol(merged_data), "columns.\n")
+
+# Print the first few rows to verify
+print(head(merged_data))

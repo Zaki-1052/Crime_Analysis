@@ -1,0 +1,298 @@
+# 05_create_visualization.R - Further improved version
+# Purpose: Create a visualization showing the relationship between
+# political leaning, incarceration rates, and crime rates across states
+
+# Load required libraries
+library(tidyverse)
+library(sf)
+library(tigris)
+library(cowplot)
+library(ggpattern) # For pattern density
+
+# Set options
+options(tigris_use_cache = TRUE)
+
+# Load master dataset
+master_data <- read_csv("data/processed/master_dataset.csv")
+print("Master dataset loaded successfully")
+
+# Get US state boundaries
+us_states <- states(cb = TRUE) %>%
+  filter(!STUSPS %in% c("PR", "VI", "GU", "AS", "MP")) %>%
+  select(GEOID, NAME, geometry) %>%
+  rename(state = NAME)
+
+# Handle state name format differences
+us_states$state <- case_when(
+  us_states$state == "District Of Columbia" ~ "District of Columbia",
+  TRUE ~ us_states$state
+)
+
+# Join datasets
+map_data <- us_states %>%
+  left_join(master_data, by = "state")
+
+# Check for missing data after join
+missing_join <- map_data %>%
+  filter(is.na(political_leaning) | is.na(imprisonment_rate_2022))
+if(nrow(missing_join) > 0) {
+  warning("Missing data after join for states: ", paste(missing_join$state, collapse=", "))
+}
+
+# CHANGE: Filter to only continental states
+continental_states <- map_data %>%
+  filter(!state %in% c("Alaska", "Hawaii"))
+
+# Calculate state centroids for bar placement
+calculate_centroids <- function(sf_data) {
+  centroids <- st_centroid(sf_data)
+  coords <- st_coordinates(centroids)
+  
+  df <- tibble(
+    state = sf_data$state,
+    centroid_x = coords[, "X"],
+    centroid_y = coords[, "Y"]
+  )
+  
+  return(df)
+}
+
+all_centroids <- tryCatch({
+  calculate_centroids(continental_states) # Only continental states
+}, error = function(e) {
+  message("Error calculating centroids: ", e$message)
+  # Fallback centroids calculation
+  centroids <- st_centroid(continental_states$geometry)
+  coords <- st_coordinates(centroids)
+  return(tibble(
+    state = continental_states$state,
+    centroid_x = coords[, "X"],
+    centroid_y = coords[, "Y"]
+  ))
+})
+
+# CHANGE: Enhance political leaning scale to make differences more apparent
+# Transform political leaning to enhance color differences
+continental_states <- continental_states %>%
+  mutate(
+    # Apply an exponent to spread out values more (emphasizes extremes)
+    enhanced_political = sign(political_leaning) * (abs(political_leaning))^0.7,
+    # Shift midpoint to make more states clearly colored
+    midpoint_adjusted = political_leaning - (-0.05) # Slight shift toward blue
+  )
+
+# Create crime bars dataset with improved colors
+prepare_crime_bars <- function(map_data, centroids) {
+  # Ensure we have data to work with
+  if(nrow(map_data) == 0 || nrow(centroids) == 0) {
+    warning("No data available for crime bars")
+    return(tibble())
+  }
+  
+  # Use safer joins and transformations
+  bars_data <- map_data %>%
+    st_drop_geometry() %>%
+    select(state, crime_rate_person_scaled, crime_rate_property_scaled, crime_rate_society_scaled) %>%
+    left_join(centroids, by = "state")
+  
+  # Check if join succeeded
+  if(any(is.na(bars_data$centroid_x))) {
+    warning("Missing centroid coordinates for states: ", 
+            paste(bars_data$state[is.na(bars_data$centroid_x)], collapse=", "))
+  }
+  
+  # Create long format data for bars
+  bars_data <- bars_data %>%
+    pivot_longer(
+      cols = c(crime_rate_person_scaled, crime_rate_property_scaled, crime_rate_society_scaled),
+      names_to = "crime_type",
+      values_to = "height"
+    ) %>%
+    mutate(
+      # Set horizontal offsets for bar placement
+      offset = case_when(
+        crime_type == "crime_rate_person_scaled" ~ -0.25,
+        crime_type == "crime_rate_property_scaled" ~ 0,
+        crime_type == "crime_rate_society_scaled" ~ 0.25
+      ),
+      x_pos = centroid_x + offset,
+      
+      # CHANGE: Use extremely vibrant, contrasting colors
+      color = case_when(
+        crime_type == "crime_rate_person_scaled" ~ "#FF6B00", # Bright orange for person crimes
+        crime_type == "crime_rate_property_scaled" ~ "#00DAFF", # Bright cyan for property crimes
+        crime_type == "crime_rate_society_scaled" ~ "#FF00FF"  # Bright magenta for society crimes
+      ),
+      
+      # Set readable labels
+      crime_label = case_when(
+        crime_type == "crime_rate_person_scaled" ~ "Person",
+        crime_type == "crime_rate_property_scaled" ~ "Property",
+        crime_type == "crime_rate_society_scaled" ~ "Society"
+      ),
+      
+      # CHANGE: Adjust scale factor to more visible level
+      scale_factor = 0.15
+    )
+  
+  return(bars_data)
+}
+
+crime_bars <- prepare_crime_bars(continental_states, all_centroids)
+
+# Function to create a map with improved styling
+create_styled_map <- function(sf_data) {
+  # Start with base map
+  p <- ggplot() +
+    # CHANGE: Use even more vibrant political colors and pattern for incarceration
+    geom_sf_pattern(
+      data = sf_data,
+      aes(
+        fill = midpoint_adjusted, # Use adjusted political value
+        pattern_density = incarceration_intensity, # Pattern density for incarceration
+        pattern_alpha = 0.8 # Make pattern visible
+      ),
+      pattern = 'stripe', # Use striped pattern
+      pattern_color = "black", # Black stripes
+      pattern_angle = 45, # Diagonal stripes
+      color = "white", # White borders
+      size = 0.3 # Slightly thicker borders for visibility
+    ) +
+    # CHANGE: More extreme color scale for political leaning
+    scale_fill_gradient2(
+      low = "#0047AB",  # Strong cobalt blue
+      mid = "#F5F5F5",  # Very light gray
+      high = "#FF0000", # Pure red
+      midpoint = 0,     # Neutral point
+      name = "Political Leaning",
+      limits = c(-0.4, 0.4), # Force wider range
+      labels = c("Strong Dem", "Moderate Dem", "Neutral", "Moderate Rep", "Strong Rep")
+    ) +
+    # Pattern density scale for incarceration
+    scale_pattern_density_continuous(
+      range = c(0.05, 0.5), # More dramatic difference
+      name = "Incarceration Rate"
+    ) +
+    theme_void()
+  
+  # Add crime bars
+  if(nrow(crime_bars) > 0) {
+    p <- p +
+      geom_segment(
+        data = crime_bars,
+        aes(
+          x = x_pos,
+          y = centroid_y,
+          xend = x_pos,
+          yend = centroid_y + height * scale_factor,
+          color = color
+        ),
+        lineend = "round",
+        size = 2.5 # Thicker bars for visibility
+      ) +
+      scale_color_identity()
+  }
+  
+  # Add title and styling
+  p <- p + 
+    ggtitle("The Disconnect Between Political Rhetoric and Crime Outcomes") +
+    theme(
+      plot.title = element_text(hjust = 0.5, size = 18, face = "bold"),
+      plot.subtitle = element_text(hjust = 0.5, size = 14),
+      legend.position = "bottom",
+      legend.box = "vertical", # Stack legends vertically
+      legend.text = element_text(size = 10),
+      legend.title = element_text(size = 12, face = "bold")
+    ) +
+    labs(
+      subtitle = "Political leaning (color), incarceration rates (stripe density), and crime rates (colored bars)"
+    )
+  
+  return(p)
+}
+
+# Create main map - now only continental US
+tryCatch({
+  main_map <- create_styled_map(continental_states)
+  print("Main map created successfully")
+}, error = function(e) {
+  stop("Error creating main map: ", e$message)
+})
+
+# Create better crime rate legend
+crime_colors <- c("#FF6B00", "#00DAFF", "#FF00FF")
+crime_labels <- c("Person Crimes", "Property Crimes", "Society Crimes")
+
+# Create a more prominent bar legend
+crime_legend_data <- tibble(
+  x = rep(1:3, each = 2),
+  y = rep(c(0, 1), 3),
+  id = rep(1:3, each = 2),
+  type = factor(rep(crime_labels, each = 2))
+)
+
+crime_legend <- ggplot(crime_legend_data, aes(x = x, y = y, group = id, color = type)) +
+  geom_line(size = 5) +
+  scale_color_manual(
+    values = setNames(crime_colors, crime_labels),
+    name = "Crime Categories"
+  ) +
+  theme_void() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 10)
+  )
+
+# Extract legends
+crime_legend_grob <- get_legend(crime_legend)
+
+# Final visualization with caption
+final_viz <- ggdraw() +
+  draw_plot(main_map, 0, 0, 1, 0.9) +
+  draw_plot(crime_legend_grob, 0.2, 0, 0.6, 0.1) +
+  draw_label(
+    "Red states (Republican) with higher incarceration rates (denser stripes) often have higher crime rates (taller bars).\nData sources: FBI Crime Data, BJS Incarceration Statistics, Election Results",
+    x = 0.5,
+    y = 0.02,
+    hjust = 0.5,
+    vjust = 0,
+    fontface = "italic",
+    size = 12
+  )
+
+# Save the visualization with optimized dimensions
+print("Saving visualization...")
+dir.create("output", showWarnings = FALSE)
+
+ggsave(
+  "output/crime_politics_map_improved.png",
+  final_viz,
+  width = 50,  # Even wider
+  height = 40, # Even taller
+  dpi = 300,
+  limitsize = FALSE
+)
+print("Visualization saved to output/crime_politics_map_improved.png")
+
+# COMMENTED OUT: Alaska and Hawaii code for future reference
+# alaska <- map_data %>% filter(state == "Alaska")
+# hawaii <- map_data %>% filter(state == "Hawaii")
+# 
+# if(nrow(alaska) > 0) {
+#   tryCatch({
+#     alaska_map <- create_styled_map(alaska)
+#     print("Alaska map created successfully")
+#   }, error = function(e) {
+#     warning("Error creating Alaska map: ", e$message)
+#   })
+# }
+# 
+# if(nrow(hawaii) > 0) {
+#   tryCatch({
+#     hawaii_map <- create_styled_map(hawaii)
+#     print("Hawaii map created successfully")
+#   }, error = function(e) {
+#     warning("Error creating Hawaii map: ", e$message)
+#   })
+# }
