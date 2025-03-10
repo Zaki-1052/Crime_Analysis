@@ -1,0 +1,24 @@
+Bureau of Justice Statistics,,,,,,,
+Filename: p22stt25.csv,,,,,,,
+"Table 25. Prisoners under the jurisdiction or in the custody of correctional authorities in U.S. territories and commonwealths, by prison facility capacity, December 31, 2022",,,,,,,
+Report title: Prisoners in 2022 – Statistical Tables   NCJ 307149,,,,,,,
+"Data source: Bureau of Justice Statistics, National Prisoner Statistics, 2022",,,,,,,
+"Authors: E. Ann Carson, PhD, former BJS Statistician; and Rich Kluckow, DSW, BJS Statistician",,,,,,,
+Refer questions to: askbjs@usdoj.gov  202-307-0765,,,,,,,
+Date of version: 11/30/23,,,,,,,
+,,,,,,,
+"Table 25. Prisoners under the jurisdiction or in the custody of correctional authorities in U.S. territories and commonwealths, by prison facility capacity, December 31, 2022",,,,,,,
+,,Jurisdiction population,,,Type of capacity,,
+U.S. territory/U.S. commonwealth,,Total,Sentenced to more than 1 year,Total custody population,Rated,Operational,Design
+,Total,"8,633","6,438","7,184",:,:,:
+American Samoa/a,,301,79,301,/,/,/
+Guam,,678,325,654,443,716,443
+Northern Mariana Islands,,170,113,170,559,356,559
+Puerto Rico/b,,"7,067","5,504","5,798","8,965","10,376","11,909"
+U.S. Virgin Islands,,417,417,261,/,352,/
+"Note: Jurisdiction refers to the legal authority of U.S. territorial or commonwealth correctional officials over a prisoner, regardless of where the prisoner is held. Custody refers to the physical location where the prisoner is held. Rated capacity is the number of prisoners or beds a facility can hold as set by a rating official. Operational capacity is the number of prisoners a facility can hold based on staffing and services. Design capacity is the number of prisoners a facility can hold as set by the architect or planner.",,,,,,,
+:Not calculated.,,,,,,,
+/Not reported.,,,,,,,
+a/American Samoa has not submitted National Prisoner Statistics data since 2011. Jurisdiction and custody data were located in an article describing COVID-19 conditions at the Territorial Correctional Facility in April 2022 (https://www.samoanews.com/local-news/task-force-briefs-fono-plan-stop-covid-spread-tcf).,,,,,,,
+b/Puerto Rico estimated the number of prisoners with sentences greater than 1 year from the population of persons with any sentence.,,,,,,,
+"Source: Bureau of Justice Statistics, National Prisoner Statistics, 2022.",,,,,,,

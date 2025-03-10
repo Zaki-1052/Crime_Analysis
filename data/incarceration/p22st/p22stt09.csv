@@ -1,0 +1,78 @@
+Bureau of Justice Statistics,,,,,,,,,,,,
+Filename: p22stt09.csv,,,,,,,,,,,,
+"Table 9. Releases of sentenced prisoners under the jurisdiction of state or federal correctional authorities, by jurisdiction, 2021 and 2022",,,,,,,,,,,,
+Report title: Prisoners in 2022 – Statistical Tables   NCJ 307149,,,,,,,,,,,,
+"Data source: Bureau of Justice Statistics, National Prisoner Statistics, 2021 and 2022",,,,,,,,,,,,
+"Authors: E. Ann Carson, PhD, former BJS Statistician; and Rich Kluckow, DSW, BJS Statistician",,,,,,,,,,,,
+Refer questions to: askbjs@usdoj.gov  202-307-0765,,,,,,,,,,,,
+Date of version: 11/30/23,,,,,,,,,,,,
+,,,,,,,,,,,,
+"Table 9. Releases of sentenced prisoners under the jurisdiction of state or federal correctional authorities, by jurisdiction, 2021 and 2022",,,,,,,,,,,,
+Jurisdiction,,2021 total ,2022 total ,"Change, 2021–2022","Percent change, 2021–2022",,2021 unconditional/a,2022 unconditional/a,2021 conditional/b,2022 conditional/b,2021 deaths/c,2022 deaths/c
+,U.S. total/d,"443,740","448,432","4,692",1.1,%,"113,887","116,661","312,870","314,794","5,052","4,898"
+Federal/e,,"39,394","42,948","3,554",9,%,"37,290","40,403",144,136,410,376
+State/d,,"404,346","405,484","1,138",0.3,%,"76,597","76,258","312,726","314,658","4,642","4,522"
+,Alabama/f,"9,372","8,978",-394,-4.2,,"2,531","2,417","3,888","3,609",188,252
+,Alaska/g,"1,687","1,810",123,7.3,,636,677,"1,046","1,126",5,7
+,Arizona,"13,581","11,832","-1,749",-12.9,,"2,071","2,035","11,365","9,641",145,156
+,Arkansas,"7,547","7,048",-499,-6.6,,629,660,"6,845","6,323",73,65
+,California,"25,599","32,055","6,456",25.2,,148,207,"24,986","31,372",423,404
+,Colorado/f,"6,072","5,260",-812,-13.4,,639,596,"5,294","4,510",57,54
+,Connecticut/g,"2,988","2,768",-220,-7.4,,"1,432","1,198","1,549","1,552",3,7
+,"Delaware/g,h","1,463","2,774","1,311",89.6,,101,99,"1,272","2,550",15,12
+,Florida,"24,552","24,730",178,0.7,,"14,684","14,715","9,417","9,615",445,395
+,Georgia,"12,042","11,681",-361,-3,,"6,337","6,777","5,470","4,685",235,219
+,Hawaii/g,"1,194","1,095",-99,-8.3,,360,334,818,397,16,9
+,Idaho,"3,045","3,326",281,9.2,,473,501,"2,546","2,806",26,19
+,Illinois/f,"16,594","16,422",-172,-1,,"2,195","2,650","14,188","13,620",128,77
+,Indiana,"8,816","9,703",887,10.1,,974,"1,001","7,768","8,601",74,101
+,Iowa,"3,217","4,040",823,25.6,,746,853,"2,427","3,150",35,29
+,Kansas,"3,354","3,205",-149,-4.4,,121,113,"3,193","3,066",39,26
+,Kentucky,"13,032","13,645",613,4.7,,"3,052","3,625","9,704","9,709",81,72
+,Louisiana,"12,533","13,373",840,6.7,,"1,131","1,014","11,266","12,140",136,146
+,Maine/i,874,870,-4,-0.5,,398,318,467,529,9,0
+,Maryland,"4,614","4,688",74,1.6,,966,"1,178","3,582","3,459",65,51
+,Massachusetts,"1,783","1,628",-155,-8.7,,969,775,775,827,39,26
+,Michigan,"8,099","7,886",-213,-2.6,,383,275,"6,198","5,714",0,131
+,Minnesota,"4,481","4,402",-79,-1.8,,296,323,"4,071","3,973",114,106
+,Mississippi,"6,268","4,560","-1,708",-27.2,,365,381,"5,770","4,009",99,77
+,Missouri,"12,389","12,207",-182,-1.5,,846,846,"11,425","11,197",102,132
+,Montana,"1,740","1,694",-46,-2.6,,182,225,"1,536","1,444",22,22
+,Nebraska,"1,922","1,974",52,2.7,,533,625,"1,356","1,318",24,19
+,Nevada,"5,116","4,565",-551,-10.8,,"1,350","1,078","3,687","3,434",79,53
+,New Hampshire,"1,088",916,-172,-15.8,,152,126,919,774,6,16
+,New Jersey,"4,815","5,259",444,9.2,,"2,830","2,757","1,907","2,436",39,53
+,New Mexico/i,"2,618","2,378",-240,-9.2,,687,611,"1,899","1,746",25,16
+,New York,"12,411","9,239","-3,172",-25.6,,806,394,"11,303","8,607",135,111
+,North Carolina,"13,280","13,644",364,2.7,,"1,394","1,415","11,766","12,123",120,106
+,North Dakota,"1,114","1,209",95,8.5,,100,114,"1,005","1,088",5,3
+,Ohio/i,"16,844","17,444",600,3.6,,"5,052","5,601","11,670","11,644",122,173
+,Oklahoma,"5,798","5,282",-516,-8.9,,"1,297","1,960","4,393","3,198",108,124
+,Oregon,"4,045","6,358","2,313",57.2,,769,35,"3,053","6,102",54,47
+,Pennsylvania,"13,744","11,870","-1,874",-13.6,,"2,542","1,888","10,927","9,781",236,185
+,Rhode Island/g,547,418,-129,-23.6,,317,282,225,133,1,3
+,South Carolina,"4,208","4,285",77,1.8,,"1,123","1,314","2,995","2,873",89,96
+,South Dakota,"3,724","3,391",-333,-8.9,,134,155,"1,990","2,047",10,11
+,Tennessee,"11,001","10,480",-521,-4.7,,"3,948","3,608","6,894","6,753",159,119
+,Texas,"58,262","58,670",408,0.7,,"7,058","6,892","48,060","49,415",564,550
+,Utah,"3,154","3,509",355,11.3,,349,426,"2,776","3,067",29,16
+,"Vermont/g,j",791,872,81,10.2,,/,/,/,/,/,/
+,Virginia/k,"10,633","12,535","1,902",17.9,,783,948,"9,712","11,479",127,99
+,Washington/i,"13,444","11,439","-2,005",-14.9,,"1,806","1,352","11,587","10,032",42,55
+,West Virginia,"3,061","2,763",-298,-9.7,,502,533,"2,422","2,108",43,24
+,Wisconsin/f,"5,010","4,496",-514,-10.3,,188,136,"4,756","4,294",41,37
+,Wyoming,780,808,28,3.6,,212,215,558,582,10,11
+"Note: Jurisdiction refers to the legal authority of state or federal correctional officials over a prisoner, regardless of where the prisoner is held. For jurisdiction-level information, see Jurisdiction notes on the BJS website. Counts exclude transfers, escapes, and absences without leave (AWOLs). Counts include deaths, releases to appeal or bond, and other releases. See Methodology. Counts cover January 1 through December 31 for each year and are based on prisoners admitted to or released from state or federal correctional authorities with a sentence of more than 1 year. As of December 31, 2001, persons sentenced for a felony in the District of Columbia were the responsibility of the Federal Bureau of Prisons (BOP).",,,,,,,,,,,,
+/Not reported.,,,,,,,,,,,,
+"a/Includes expirations of sentence, commutations, and other unconditional releases.",,,,,,,,,,,,
+"b/Includes releases to probation, supervised mandatory releases, and other unspecified conditional releases.",,,,,,,,,,,,
+"c/Includes all deaths of prisoners under state or federal jurisdiction with a sentence of more than 1 year. Counts of deaths in state and federal prisons may differ from previously published statistics due to differences in definitions. All causes of death are included in the counts, including executions.",,,,,,,,,,,,
+"d/U.S. and state total estimates for 2021 and 2022 include imputed counts for Vermont, which did not submit data on releases for 2021 or 2022.",,,,,,,,,,,,
+"e/Includes adult prisoners held in nonsecure community corrections facilities and adults and persons age 17 or younger held in privately operated facilities. The 144 conditional releases in 2021 and 136 conditional releases in 2022 were of persons sentenced before the 1984 Sentencing Reform Act, which eliminated federal parole. The BOP does not have jurisdiction over released prisoners, so most persons are released unconditionally, although the vast majority of all persons released from federal prison enter a period of supervised community corrections under the authority of the Administrative Office of the U.S. Courts. In 2023, 2,361 females and 7,758 males were released from the BOP under the First Step Act law (P.L. 115–391) and were classified in this table as being released after expiration of sentences.",,,,,,,,,,,,
+f/Includes the release of an undetermined number of prisoners with sentences of 1 year or less.,,,,,,,,,,,,
+g/Prisons and jails form one integrated system. Data include total jail and prison populations.,,,,,,,,,,,,
+h/Includes offenders who received a combined sentence of prison and probation or parole of more than 1 year.,,,,,,,,,,,,
+"i/Includes all releases from state prison, regardless of sentence length. See Jurisdiction notes on the BJS website.",,,,,,,,,,,,
+j/State did not supply data on prison releases for 2021 or 2022. See Methodology for imputation strategy.,,,,,,,,,,,,
+k/Release data are based on calendar year 2022 counts and include persons sentenced to 1 year or more.,,,,,,,,,,,,
+"Source: Bureau of Justice Statistics, National Prisoner Statistics, 2021 and 2022.",,,,,,,,,,,,
