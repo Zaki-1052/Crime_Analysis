@@ -69,7 +69,7 @@ map_data <- us_states %>%
 map_data <- map_data %>%
   mutate(
     # Use power transformation to amplify differences while preserving sign
-    enhanced_political = sign(political_leaning) * (abs(political_leaning))^0.2,
+    enhanced_political = sign(political_leaning) * (abs(political_leaning))^0.3,
     
     # Apply additional boost to ensure clear red/blue distinction
     final_political = case_when(
@@ -553,7 +553,7 @@ hawaii_map <- create_state_inset(
 # Convert all legends to grobs
 # ================================================
 
-crime_legend_grob <- ggplotGrob(crime_legend)
+#crime_legend_grob <- ggplotGrob(crime_legend)
 political_legend_grob <- ggplotGrob(political_legend)
 incarceration_legend_grob <- ggplotGrob(incarceration_legend)
 
